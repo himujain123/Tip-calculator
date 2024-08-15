@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Tip Calculator</title>
+	<style>
+		body {
+			font-family: 'Arial', sans-serif;
+			background-color: #f4f4f4;
+			margin: 0;
+			padding: 0;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+			height: 100vh;
+		}
+
+		h2 {
+			text-align: center;
+			color: #333;
+			margin-bottom: 20px;
+		}
+
+		form {
+			background-color: #fff;
+			border-radius: 10px;
+			padding: 20px;
+			box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+		}
+
+		label {
+			display: block;
+			font-weight: bold;
+			margin-bottom: 5px;
+		}
+
+		input, select {
+			width: 100%;
+			padding: 8px;
+			margin-bottom: 10px;
+			box-sizing: border-box;
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		.tip-options {
+			display: flex;
+			margin-bottom: 10px;
+		}
+
+		.tip-option {
+			margin-right: 10px;
+		}
+
+		button {
+			background-color: #4caf50;
+			color: #fff;
+			padding: 10px;
+			border: none;
+			border-radius: 4px;
+			cursor: pointer;
+			width: 100%;
+		}
+
+		button:hover {
+			background-color: #45a049;
+		}
+	</style>
+</head>
+<body>
+	<form method="post" action="{% url 'tip_calculator' %}">
+		<h2>Tip Calculator</h2>
+		<br>
+		{% csrf_token %}
+		<label for="{{ form.bill_amount.id_for_label }}">Bill Amount</label>
+		{{ form.bill_amount }}
+		<br>
+		<label for="{{ form.tip_percentage.id_for_label }}">Tip Percentage</label>
+		<div class="tip-options">
+			{% for choice in form.tip_percentage %}
+				<div class="tip-option">
+					{{ choice.tag }} {{ choice.choice_label }}
+				</div>
+			{% endfor %}
+		</div>
+		<br>
+		<label for="{{ form.num_people.id_for_label }}">Number of People</label>
+		{{ form.num_people }}
+		<br>
+		
+		<button type="submit">Calculate</button>
+	</form>
+</body>
+</html>
